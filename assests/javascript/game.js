@@ -1,13 +1,15 @@
 //Array for list of Words to Guess
 const words = ["mindflayer","goblin","minotaur","kobold","terrasque","harpie","drow","orc","dwarves","bandit","wolf","slime","dragon","changling","skeleton","zombie","deva","basilisk","banshee","owlbear","elemental","lich","hydra","golem"];
 //Word to guess in array, each index being a letter to guess
-let wordToGuess = [];
+let wordToGuess = ["k","o","b","o","l","d"];
+let blankword = ["_","_","_","_","_","_"];
 let wincounter = 0;
-let livesremaining = 0;
+let livesremaining = 4;
+let stringBlanks = "";
 let lettersGuessed = [];
-let notgameover = true ;
+let notgameover = false ;
 let stringOfGuesses = "";
-let alphabet = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","r","s","t","u","v","w","x","y","z"];
+let alphabet = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
 
 const idForGuessing = document.getElementById("wordtoguess");
 
@@ -42,19 +44,82 @@ if(notgameover){
     if(lettersGuessed.indexOf(userschoice) !== -1) {
         //display that they already chose it
     }
-    else if(userschoice === "backspace"){
-
-    }
     //After testing whether or not its a already used key
     else if(alphabet.indexOf(userschoice) !== -1) {
+        //Adds choice to list listed items, as well as showing user the letters already chosen
         lettersGuessed.push(userschoice);
         stringOfGuesses = stringOfGuesses + userschoice.toUpperCase() + " ";
         document.getElementById("lettersGuessed").innerHTML = stringOfGuesses;
+        
+        //goes thru and replaces the blanks with letters
+        if(wordToGuess.indexOf(userschoice) !== -1){
+            for(k = 0; k < wordToGuess.length; k++){
+                if(wordToGuess[k] === userschoice){
+                    blankword[k] = userschoice;
+                }
+            }
+
+            //clears stringBlanks, replaces each part with words completed
+            stringBlanks="";
+            blankword.forEach(filler => {
+                stringBlanks = stringBlanks + " " + filler + " ";
+            })
+            document.getElementById("wordToGuess").innerHTML = stringBlanks;
+
+            //Tests to see if User Won
+            let wintest = 0;
+            blankword.forEach(element => {      
+                if(element === "_"){
+                    wintest++;
+                }      
+            });
+            if(wintest === 0){
+                notgameover = false;
+                wincounter++;
+                document.getElementById("lettersGuessed").innerHTML = "You Win"
+
+            }
+        }
+
+        //if letter was not in word
+        else{
+            livesremaining = livesremaining -1;
+            document.getElementById("livesremainingID").innerHTML = livesremaining;
+        }
+
+        if(livesremaining === 0)
+        {
+            notgameover= false;
+            document.getElementById("wordToGuess").innerHTML = "Game Over, Press Any Key";
+        }
+
     }
     
-    // letters.indexOf(usersguesslower)) === -1 WILL TEST IF ITS IN THE ARRAY....Im a moron, -1 is not in the array
+    
 }
-else{
 
+//if Game is over or hasnt started yet
+else{
+    //Set values for everything
+    livesremaining = 4;
+    notgameover = true;
+    livesremaining = 7;
+    stringBlanks = "";
+    lettersGuessed = [];
+    stringOfGuesses = "";
+    wordToGuess= [];
+    blankword = [];
+
+    //Picks Random Word, creates Blanks array and word to guess Array
+    let rdmIndex = Math.floor(Math.random()*words.length);
+    for(i=0;i < words[rdmIndex].length; i++){
+        wordToGuess.push(words[rdmIndex].charAt(i));
+        blankword.push("_");
+        stringBlanks = stringBlanks + "_" + " ";
+    }
+
+    document.getElementById("livesremainingID").innerHTML = livesremaining;
+    document.getElementById("lettersGuessed").innerHTML = stringOfGuesses;
+    document.getElementById("wordToGuess").innerHTML = stringBlanks;
 }
 }
