@@ -14,29 +14,9 @@ let alphabet = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p",
 const idForGuessing = document.getElementById("wordtoguess");
 
 
-// Creating the blanks for the word to guess in a Array for each letter so it can be changed later
-// to change with each guess.
-
-function createBlanks(primaryword){
-    let blankword = [];
-    for(i=0; i < primaryword.length(); i++) {
-        blankword = blankword.push("_");
-    }
-    return blankword;
-}
-
-// function create array
-function correctArray(wordToGuess){
-    let correctword = [];
-    for(i=0; i < primaryword.length(); i++) {
-        correctword = correctword.push(primaryword.charAt(i));
-    }
-}
-
 // start of when the user presses a key ------------------
  document.onkeyup = function(event){
      let userschoice = event.key.toLowerCase();
-     console.log(userschoice);
 
 // test if the games over
 if(notgameover){
@@ -45,7 +25,7 @@ if(notgameover){
         //display that they already chose it
     }
     //After testing whether or not its a already used key
-    else if(alphabet.indexOf(userschoice) !== -1) {
+    else if(alphabet.indexOf(userschoice) !== -1 && wordToGuess.indexOf(userschoice) !== -1) {
         //Adds choice to list listed items, as well as showing user the letters already chosen
         lettersGuessed.push(userschoice);
         stringOfGuesses = stringOfGuesses + userschoice.toUpperCase() + " ";
@@ -77,12 +57,16 @@ if(notgameover){
                 notgameover = false;
                 wincounter++;
                 document.getElementById("lettersGuessed").innerHTML = "You Win"
+                document.getElementById("winCounterID").innerHTML = wincounter;
 
             }
         }
-
+    }
         //if letter was not in word
-        else{
+        else if(alphabet.indexOf(userschoice) !==0){
+            lettersGuessed.push(userschoice);
+            stringOfGuesses = stringOfGuesses + userschoice.toUpperCase() + " ";
+            document.getElementById("lettersGuessed").innerHTML = stringOfGuesses;
             livesremaining = livesremaining -1;
             document.getElementById("livesremainingID").innerHTML = livesremaining;
         }
@@ -93,7 +77,7 @@ if(notgameover){
             document.getElementById("wordToGuess").innerHTML = "Game Over, Press Any Key";
         }
 
-    }
+    
     
     
 }
@@ -103,7 +87,7 @@ else{
     //Set values for everything
     livesremaining = 4;
     notgameover = true;
-    livesremaining = 7;
+    livesremaining = 4;
     stringBlanks = "";
     lettersGuessed = [];
     stringOfGuesses = "";
