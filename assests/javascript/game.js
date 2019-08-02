@@ -1,9 +1,15 @@
 //Array for list of Words to Guess
-const words = [];
+const words = ["mindflayer","goblin","minotaur","kobold","terrasque","harpie","drow","orc","dwarves","bandit","wolf","slime","dragon","changling","skeleton","zombie","deva","basilisk","banshee","owlbear","elemental","lich","hydra","golem"];
 //Word to guess in array, each index being a letter to guess
-const wordToGuess = [];
-const wincounter = 0;
-const livesremaining = 0;
+let wordToGuess = [];
+let wincounter = 0;
+let livesremaining = 0;
+let lettersGuessed = [];
+let notgameover = true ;
+let stringOfGuesses = "";
+let alphabet = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","r","s","t","u","v","w","x","y","z"];
+
+const idForGuessing = document.getElementById("wordtoguess");
 
 
 // Creating the blanks for the word to guess in a Array for each letter so it can be changed later
@@ -25,16 +31,30 @@ function correctArray(wordToGuess){
     }
 }
 
-//Letter guessing will be what the user guesses, and the correctLetter will be used in the forEach loop testing
-//each point in the wordtoGuess array, will replace wordToGuess in array with correct letter, and set failtest
-//up one point. If failtest is greater then 0, means at least one spot on the Array was the correct letter.
-function checking(letterguessing, correctword){
-    const failtest = 0;
-    for(k=0; k < correctword; k++ ){
-        if(letterguessing === correctword[k]){
-            wordToGuess[k] = correctword[k]
-            failtest++;
-        }
+// start of when the user presses a key ------------------
+ document.onkeyup = function(event){
+     let userschoice = event.key.toLowerCase();
+     console.log(userschoice);
+
+// test if the games over
+if(notgameover){
+    //  test to see if the letter has been guessed yet
+    if(lettersGuessed.indexOf(userschoice) !== -1) {
+        //display that they already chose it
     }
-    return failtest;
+    else if(userschoice === "backspace"){
+
+    }
+    //After testing whether or not its a already used key
+    else if(alphabet.indexOf(userschoice) !== -1) {
+        lettersGuessed.push(userschoice);
+        stringOfGuesses = stringOfGuesses + userschoice.toUpperCase() + " ";
+        document.getElementById("lettersGuessed").innerHTML = stringOfGuesses;
+    }
+    
+    // letters.indexOf(usersguesslower)) === -1 WILL TEST IF ITS IN THE ARRAY....Im a moron, -1 is not in the array
+}
+else{
+
+}
 }

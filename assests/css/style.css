@@ -1,0 +1,30 @@
+html{
+    background-color:black;
+}
+.mainimage{
+    margin-left:10%;
+    margin-right:10%;
+    color: white;
+    text-align:center;
+    margin:10px;
+    font-family: "brush script MT", "Brush script Std", "cursive", sans-serif;
+}
+body{
+    color:white;
+}
+
+.leftblock{
+    float:left;
+    width:23%;
+    height:200px;
+    font-size:24px;
+    margin:5px;
+    
+}
+#id{
+    overflow-wrap:break-word;
+}
+.rightblock{
+    float:right;
+    width:30%;
+}
